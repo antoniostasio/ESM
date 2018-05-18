@@ -90,3 +90,37 @@ y2 = imwarp(x, tform, 'bilinear');
 figure(1);
 imshow(y2, [0 255]);
 %}
+
+% TRASLAZIONE
+%{
+x = double(imread('lena.jpg'));
+[M,N] = size(x);
+[n,m] = meshgrid(1:N,1:M);
+np = n+50; mp = m;
+y = interp2(n,m,x,np,mp, 'bilinear');
+%}
+
+% ROTAZIONE
+%{
+tx = -N/2;
+ty = -M/2;
+rt = pi/4;
+T = [cos(rt) sin(rt) 0;
+    -sin(rt) cos(rt) 0;
+    (tx*cos(rt)-ty*sin(rt)-tx) (tx*sin(rt)+ty*cos(rt)-ty) 1];
+tform = affine2d(T);
+RX = imref2d(size(x));
+y = imwarp(x, tform, 'OutputView', RX, 'FillValues', 255);
+
+figure(1);
+subplot(1,2,1); imshow(x, [0 255]);
+subplot(1,2,2); imshow(y, [0 255]);
+%}
+
+x = checkerboard(50);
+y = rot_shear(x,pi/4,2);
+
+figure(1);
+subplot(1,2,1); imshow(x, []);
+subplot(1,2,2); imshow(y, []);
+

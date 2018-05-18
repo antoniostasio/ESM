@@ -1,0 +1,15 @@
+function g = elabora3(col)
+%ELABORA3 Summary of this function goes here
+%   Detailed explanation goes here
+
+[m,n] = size(col);
+
+x = col(5,:);
+
+u = bsxfun(@minus, col,x);
+mask = u >= 0;
+
+g = sum(col)/n;
+
+end
+
